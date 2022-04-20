@@ -1,10 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1eqlox9" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
-  <bpmn:process id="Process_00f7wil" isExecutable="true">
+  <bpmn:process id="Process_00f7wil" name=" Закупка ПО" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="software" label="Введите название ПО предлагаемого к закупке" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="reason" label="Укажите для каких целей оно Вам необходимо " type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_13gzaqu</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Activity_1v0yh02" name="Рассмотреть заявку на закупку ПО" camunda:formRef="approve-form" camunda:formRefBinding="deployment" camunda:candidateGroups="MANAGER">
+    <bpmn:userTask id="Activity_1v0yh02" name="Рассмотреть заявку на закупку ПО" camunda:candidateGroups="MANAGER">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="software" label="Наименование ПО" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="reason" label="Обоснование закупки" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="comment" label="Введите комментарий" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="result" label="Ваше решение" type="enum" defaultValue="decline">
+            <camunda:value id="decline" name="Отклонить" />
+            <camunda:value id="approve" name="Одобрить" />
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_13gzaqu</bpmn:incoming>
       <bpmn:outgoing>Flow_0m2qzyo</bpmn:outgoing>
     </bpmn:userTask>
