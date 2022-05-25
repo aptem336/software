@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1eqlox9" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
-  <bpmn:process id="Process_00f7wil" name=" Закупка ПО" isExecutable="true">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1eqlox9" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="software" name=" Закупка ПО" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:extensionElements>
         <camunda:formData>
@@ -18,7 +18,7 @@
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_13gzaqu</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Activity_1v0yh02" name="Рассмотреть заявку на закупку ПО" camunda:candidateGroups="MANAGER">
+    <bpmn:userTask id="Activity_1v0yh02" name="Рассмотреть заявку на закупку ПО" camunda:formRef="approve-form" camunda:formRefBinding="deployment" camunda:candidateGroups="MANAGER">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="software" label="Наименование ПО" type="string">
@@ -36,39 +36,107 @@
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="result" label="Ваше решение" type="enum" defaultValue="decline">
-            <camunda:value id="decline" name="Отклонить" />
-            <camunda:value id="approve" name="Одобрить" />
+          <camunda:formField id="approved" label="Согласовано" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0857gl5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0m2qzyo</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_13gzaqu" sourceRef="StartEvent_1" targetRef="Activity_1shbxep" />
+    <bpmn:endEvent id="Event_17gj3e2">
+      <bpmn:incoming>Flow_1cixom1</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0m2qzyo" sourceRef="Activity_1v0yh02" targetRef="Gateway_1kg8ptv" />
+    <bpmn:sequenceFlow id="Flow_1cixom1" sourceRef="Activity_0ud7r3m" targetRef="Event_17gj3e2" />
+    <bpmn:userTask id="Activity_0ud7r3m" name="Произвести закупку ПО" camunda:formRef="purchase-form" camunda:formRefBinding="deployment" camunda:candidateGroups="MANAGER">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="software" type="string" />
+          <camunda:formField id="reason" type="string" />
+          <camunda:formField id="comment" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ppo1m0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cixom1</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_1shbxep" name="Заполнить заявку на закупку ПО" camunda:formRef="start-form" camunda:formRefBinding="deployment" camunda:candidateGroups="EMPLOYEE">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="software" label="Наименование ПО" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="reason" label="Обоснование закупки" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
           </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_13gzaqu</bpmn:incoming>
-      <bpmn:outgoing>Flow_0m2qzyo</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0857gl5</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_13gzaqu" sourceRef="StartEvent_1" targetRef="Activity_1v0yh02" />
-    <bpmn:endEvent id="Event_17gj3e2">
+    <bpmn:sequenceFlow id="Flow_0857gl5" sourceRef="Activity_1shbxep" targetRef="Activity_1v0yh02" />
+    <bpmn:exclusiveGateway id="Gateway_1kg8ptv" default="Flow_04omn6a">
       <bpmn:incoming>Flow_0m2qzyo</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ppo1m0</bpmn:outgoing>
+      <bpmn:outgoing>Flow_04omn6a</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1ppo1m0" sourceRef="Gateway_1kg8ptv" targetRef="Activity_0ud7r3m">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${approved == 'true'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_1yi0pam">
+      <bpmn:incoming>Flow_04omn6a</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0m2qzyo" sourceRef="Activity_1v0yh02" targetRef="Event_17gj3e2" />
+    <bpmn:sequenceFlow id="Flow_04omn6a" sourceRef="Gateway_1kg8ptv" targetRef="Event_1yi0pam" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_00f7wil">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="software">
       <bpmndi:BPMNEdge id="Flow_0m2qzyo_di" bpmnElement="Flow_0m2qzyo">
-        <di:waypoint x="370" y="117" />
-        <di:waypoint x="422" y="117" />
+        <di:waypoint x="470" y="117" />
+        <di:waypoint x="505" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_13gzaqu_di" bpmnElement="Flow_13gzaqu">
-        <di:waypoint x="215" y="117" />
-        <di:waypoint x="270" y="117" />
+        <di:waypoint x="188" y="117" />
+        <di:waypoint x="230" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="99" width="36" height="36" />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1cixom1_di" bpmnElement="Flow_1cixom1">
+        <di:waypoint x="690" y="117" />
+        <di:waypoint x="722" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0857gl5_di" bpmnElement="Flow_0857gl5">
+        <di:waypoint x="330" y="117" />
+        <di:waypoint x="370" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ppo1m0_di" bpmnElement="Flow_1ppo1m0">
+        <di:waypoint x="555" y="117" />
+        <di:waypoint x="590" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04omn6a_di" bpmnElement="Flow_04omn6a">
+        <di:waypoint x="530" y="142" />
+        <di:waypoint x="530" y="172" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_10x1aof_di" bpmnElement="Activity_1v0yh02">
-        <dc:Bounds x="270" y="77" width="100" height="80" />
+        <dc:Bounds x="370" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1shbxep_di" bpmnElement="Activity_1shbxep">
+        <dc:Bounds x="230" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gzytco_di" bpmnElement="Activity_0ud7r3m">
+        <dc:Bounds x="590" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1yi0pam_di" bpmnElement="Event_1yi0pam">
+        <dc:Bounds x="512" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1kg8ptv_di" bpmnElement="Gateway_1kg8ptv" isMarkerVisible="true">
+        <dc:Bounds x="505" y="92" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_17gj3e2_di" bpmnElement="Event_17gj3e2">
-        <dc:Bounds x="422" y="99" width="36" height="36" />
+        <dc:Bounds x="722" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

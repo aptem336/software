@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 2,
+  "components": [
+    {
+      "label": "Наименование ПО",
+      "type": "textfield",
+      "id": "Field_1xft6aw",
+      "key": "software",
+      "validate": {
+        "readonly": true
+      }
+    },
+    {
+      "label": "Обоснование закупки",
+      "type": "textfield",
+      "id": "Field_1ewbbaq",
+      "key": "reason",
+      "validate": {
+        "readonly": true
+      }
+    },
+    {
+      "label": "Введите комментарий",
+      "type": "textfield",
+      "id": "Field_022crw7",
+      "key": "comment",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": " Согласовано",
+      "type": "checkbox",
+      "id": "Field_03cdtqi",
+      "key": "approved"
+    }
+  ],
+  "type": "default",
+  "id": "approve-form"
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "components": [
+    {
+      "label": "Введите название ПО предлагаемого к закупке",
+      "type": "textfield",
+      "id": "Field_1xft6a",
+      "key": "software",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Укажите для каких целей оно Вам необходимо ",
+      "type": "textfield",
+      "id": "Field_1ewbbar",
+      "key": "reason",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "start-form"
+}
