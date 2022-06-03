@@ -23,7 +23,7 @@ public class OrderResourceImpl implements OrderResource {
 
     @Override
     public Uni<StartOrderResponseBody> start(StartOrderRequestBody startOrderResponseBody) {
-        return processDefinitionRestClient.startProcessInstance(camundaConfig.processDefinitionId(),
+        return processDefinitionRestClient.startProcessInstanceByKey(camundaConfig.processDefinitionKey(),
                         startOrderStartProcessInstanceRequestBodyMap.apply(startOrderResponseBody))
                 .onItem()
                 .transform(startProcessInstanceStartOrderResponseBodyMap);

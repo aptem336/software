@@ -14,16 +14,6 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public interface ProcessDefinitionRestClient {
-    /**
-     * POST /process-definition/{id}/start
-     *
-     * @param processDefinitionId The id of the process definition to be retrieved.
-     * @return created process instance info
-     */
-    @POST
-    @Path("/{processDefinitionId}/start")
-    Uni<StartProcessInstanceResponseBody> startProcessInstance(@PathParam("processDefinitionId") String processDefinitionId,
-                                                               StartProcessInstanceRequestBody startProcessInstanceRequestBody);
 
     /**
      * POST /process-definition/key/{key}/start (starts the latest version of process definition which belongs to no tenant)
