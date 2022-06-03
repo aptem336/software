@@ -24,4 +24,15 @@ public interface ProcessDefinitionRestClient {
     @Path("/{processDefinitionId}/start")
     Uni<StartProcessInstanceResponseBody> startProcessInstance(@PathParam("processDefinitionId") String processDefinitionId,
                                                                StartProcessInstanceRequestBody startProcessInstanceRequestBody);
+
+    /**
+     * POST /process-definition/key/{key}/start (starts the latest version of process definition which belongs to no tenant)
+     *
+     * @param processDefinitionKey	The key of the process definition (the latest version thereof) to be retrieved.
+     * @return created process instance info
+     */
+    @POST
+    @Path("/key/{processDefinitionKey}/start")
+    Uni<StartProcessInstanceResponseBody> startProcessInstanceByKey(@PathParam("processDefinitionKey") String processDefinitionKey,
+                                                               StartProcessInstanceRequestBody startProcessInstanceRequestBody);
 }
