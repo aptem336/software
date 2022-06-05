@@ -2,6 +2,7 @@ package com.georg.resource.order;
 
 import com.georg.camunda.processdefinition.ProcessDefinitionRestClient;
 import com.georg.config.CamundaConfig;
+import com.georg.enricher.StartProcessInstanceOrderNumberEnricher;
 import com.georg.map.StartOrderStartProcessInstanceRequestBodyMap;
 import com.georg.map.StartProcessInstanceStartOrderResponseBodyMap;
 import io.smallrye.mutiny.Uni;
@@ -16,6 +17,9 @@ public class OrderResourceImpl implements OrderResource {
     CamundaConfig camundaConfig;
     @Inject
     StartOrderStartProcessInstanceRequestBodyMap startOrderStartProcessInstanceRequestBodyMap;
+
+    @Inject
+    StartProcessInstanceOrderNumberEnricher startProcessInstanceOrderNumberEnricher;
     @RestClient
     ProcessDefinitionRestClient processDefinitionRestClient;
     @Inject
@@ -23,8 +27,13 @@ public class OrderResourceImpl implements OrderResource {
 
     @Override
     public Uni<StartOrderResponseBody> start(StartOrderRequestBody startOrderResponseBody) {
-        return processDefinitionRestClient.startProcessInstanceByKey(camundaConfig.processDefinitionKey(),
-                        startOrderStartProcessInstanceRequestBodyMap.apply(startOrderResponseBody))
+        return Uni.createFrom().item(startOrderStartProcessInstanceRequestBodyMap.apply(startOrderResponseBody))
+                .plug(startProcessInstanceOrderNumberEnricher)
+                .onItem()
+                .transformToUni(startProcessInstanceRequestBody ->
+                        processDefinitionRestClient.startProcessInstanceByKey(
+                                camundaConfig.processDefinitionKey(),
+                                startProcessInstanceRequestBody))
                 .onItem()
                 .transform(startProcessInstanceStartOrderResponseBodyMap);
     }

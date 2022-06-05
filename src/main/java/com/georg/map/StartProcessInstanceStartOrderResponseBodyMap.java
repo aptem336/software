@@ -10,6 +10,8 @@ import java.util.function.Function;
 public class StartProcessInstanceStartOrderResponseBodyMap implements Function<StartProcessInstanceResponseBody, StartOrderResponseBody>{
     @Override
     public StartOrderResponseBody apply(StartProcessInstanceResponseBody startProcessInstanceResponseBody) {
-        return StartOrderResponseBody.builder().build();
+        return StartOrderResponseBody.builder()
+                .processInstanceId(startProcessInstanceResponseBody.getId())
+                .build();
     }
 }
