@@ -2,6 +2,7 @@ package com.georg.resource.task;
 
 import com.georg.camunda.task.TaskRestClient;
 import com.georg.enricher.TaskQueryResponseBodyOrderNumberEnricher;
+import com.georg.map.CamundaTaskDeployedFormTaskFormResponseBodyMap;
 import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
@@ -23,6 +24,9 @@ public class TaskResourceImpl implements TaskResource {
     @Inject
     TaskQueryResponseBodyOrderNumberEnricher taskQueryResponseBodyOrderNumberEnricher;
 
+    @Inject
+    CamundaTaskDeployedFormTaskFormResponseBodyMap camundaTaskDeployedFormTaskFormResponseBodyMap;
+
     @Override
     public Uni<List<TaskQueryResponseBody>> get(TaskQueryRequestBody taskQueryRequestBody) {
         return taskRestClient.get(taskQueryCamundaTaskQueryRequestBodyMap.apply(taskQueryRequestBody))
@@ -35,5 +39,12 @@ public class TaskResourceImpl implements TaskResource {
                         .collect(Collectors.toList()))
                 .onItem()
                 .transformToUni(taskQueryRequestBodyUnis -> Uni.join().all(taskQueryRequestBodyUnis).andFailFast());
+    }
+
+    @Override
+    public Uni<TaskFormResponseBody> getForm(String taskId) {
+        return taskRestClient.getDeployedForm(taskId)
+                .onItem()
+                .transform(camundaTaskDeployedFormTaskFormResponseBodyMap);
     }
 }

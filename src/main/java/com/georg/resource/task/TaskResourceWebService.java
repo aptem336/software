@@ -3,10 +3,7 @@ package com.georg.resource.task;
 import io.smallrye.mutiny.Uni;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -20,5 +17,12 @@ public class TaskResourceWebService implements TaskResource {
     @Override
     public Uni<List<TaskQueryResponseBody>> get(TaskQueryRequestBody taskQueryRequestBody) {
         return taskResourceImpl.get(taskQueryRequestBody);
+    }
+
+    @GET
+    @Path("{taskId}/form")
+    @Override
+    public Uni<TaskFormResponseBody> getForm(@PathParam("taskId") String taskId) {
+        return taskResourceImpl.getForm(taskId);
     }
 }

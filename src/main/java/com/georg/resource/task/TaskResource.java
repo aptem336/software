@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TaskResource {
     Uni<List<TaskQueryResponseBody>> get(TaskQueryRequestBody taskQueryRequestBody);
+
+    Uni<TaskFormResponseBody> getForm(String taskId);
 }

@@ -35,4 +35,14 @@ public interface TaskRestClient {
     @Path("/{id}/variables/{varName}")
     Uni<CamundaTaskVariableResponseBody> getVariable(@PathParam("id") String id,
                                                      @PathParam("varName") String varName);
+
+
+    /**
+     * GET /task/{id}/deployed-form
+     * @param id The id of the task to get the deployed form for.
+     * @return An object with the deployed form content.
+     */
+    @GET
+    @Path("/{id}/deployed-form")
+    Uni<CamundaTaskDeployedFormResponseBody> getDeployedForm(@PathParam("id") String id);
 }
