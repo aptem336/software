@@ -8,6 +8,7 @@ import lombok.Data;
 public class TaskQueryResponseBody {
     private String id;
     private String name;
+    private String orderNumber;
     private String assignee;
     private String created;
 }

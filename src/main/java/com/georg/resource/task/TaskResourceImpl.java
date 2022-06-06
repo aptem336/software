@@ -20,13 +20,20 @@ public class TaskResourceImpl implements TaskResource {
     @Inject
     CamundaTaskQueryTaskQueryResponseBodyMap camundaTaskQueryTaskQueryResponseBodyMap;
 
+    @Inject
+    TaskQueryResponseBodyOrderNumberEnricher taskQueryResponseBodyOrderNumberEnricher;
+
     @Override
     public Uni<List<TaskQueryResponseBody>> get(TaskQueryRequestBody taskQueryRequestBody) {
         return taskRestClient.get(taskQueryCamundaTaskQueryRequestBodyMap.apply(taskQueryRequestBody))
                 .onItem()
                 .transform(camundaTaskQueryResponseBodies -> camundaTaskQueryResponseBodies
                         .stream()
-                        .map(camundaTaskQueryTaskQueryResponseBodyMap)
-                        .collect(Collectors.toList()));
+                        .map(camundaTaskQueryResponseBody -> Uni.createFrom()
+                                .item(camundaTaskQueryTaskQueryResponseBodyMap.apply(camundaTaskQueryResponseBody))
+                                .plug(taskQueryResponseBodyOrderNumberEnricher))
+                        .collect(Collectors.toList()))
+                .onItem()
+                .transformToUni(taskQueryRequestBodyUnis -> Uni.join().all(taskQueryRequestBodyUnis).andFailFast());
     }
 }

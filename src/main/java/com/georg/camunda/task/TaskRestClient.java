@@ -3,10 +3,7 @@ package com.georg.camunda.task;
 import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -20,9 +17,22 @@ import java.util.List;
 public interface TaskRestClient {
     /**
      * POST /task
+     *
      * @param camundaTaskQueryRequestBody A JSON object
      * @return A JSON array of task objects
      */
     @POST
     Uni<List<CamundaTaskQueryResponseBody>> get(CamundaTaskQueryRequestBody camundaTaskQueryRequestBody);
+
+    /**
+     * GET /task/{id}/variables/{varName}
+     *
+     * @param id      The id of the task to retrieve the variable from.
+     * @param varName The name of the variable to get.
+     * @return A JSON object
+     */
+    @GET
+    @Path("/{id}/variables/{varName}")
+    Uni<CamundaTaskVariableResponseBody> getVariable(@PathParam("id") String id,
+                                                     @PathParam("varName") String varName);
 }
