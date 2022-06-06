@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.Map;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -24,5 +25,12 @@ public class TaskResourceWebService implements TaskResource {
     @Override
     public Uni<TaskFormResponseBody> getForm(@PathParam("taskId") String taskId) {
         return taskResourceImpl.getForm(taskId);
+    }
+
+    @GET
+    @Path("{taskId}/variables")
+    @Override
+    public Uni<Map<String, String>> getVariables(String taskId) {
+        return taskResourceImpl.getVariables(taskId);
     }
 }

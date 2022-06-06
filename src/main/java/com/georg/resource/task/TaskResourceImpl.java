@@ -9,6 +9,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -46,5 +47,17 @@ public class TaskResourceImpl implements TaskResource {
         return taskRestClient.getDeployedForm(taskId)
                 .onItem()
                 .transform(camundaTaskDeployedFormTaskFormResponseBodyMap);
+    }
+
+    @Override
+    public Uni<Map<String, String>> getVariables(String taskId) {
+        return taskRestClient.getVariables(taskId)
+                .onItem()
+                .transform(stringCamundaTaskVariablesResponseBodyMap ->
+                        stringCamundaTaskVariablesResponseBodyMap.entrySet()
+                                .stream()
+                                .collect(Collectors.toMap(Map.Entry::getKey,
+                                        camundaTaskVariablesResponseBodyEntry
+                                                -> camundaTaskVariablesResponseBodyEntry.getValue().getValue())));
     }
 }

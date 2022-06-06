@@ -6,6 +6,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <a href="https://docs.camunda.org/manual/7.5/reference/rest/task/">https://docs.camunda.org/manual/7.5/reference/rest/task/</a>
@@ -39,10 +40,21 @@ public interface TaskRestClient {
 
     /**
      * GET /task/{id}/deployed-form
+     *
      * @param id The id of the task to get the deployed form for.
      * @return An object with the deployed form content.
      */
     @GET
     @Path("/{id}/deployed-form")
     Uni<CamundaTaskDeployedFormResponseBody> getDeployedForm(@PathParam("id") String id);
+
+    /**
+     * GET /task/{id}/variables
+     *
+     * @param taskId The id of the task to retrieve the variables from.
+     * @return A JSON object of variables key-value pairs. Each key is a variable name and each value a variable value object that has the following properties:
+     */
+    @GET
+    @Path("/{taskId}/variables")
+    Uni<Map<String, CamundaTaskVariablesResponseBody>> getVariables(@PathParam("taskId") String taskId);
 }
