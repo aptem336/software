@@ -57,4 +57,16 @@ public interface TaskRestClient {
     @GET
     @Path("/{taskId}/form-variables")
     Uni<Map<String, CamundaTaskVariablesResponseBody>> getVariables(@PathParam("taskId") String taskId);
+
+
+    /**
+     * POST /task/{id}/complete
+     * @param taskId The id of the task to complete.
+     * @param camundaTaskCompleteRequestBody A JSON object
+     * @return This method returns no content.
+     */
+    @POST
+    @Path("/{taskId}/complete")
+    Uni<Void> complete(@PathParam("taskId") String taskId,
+                       CamundaTaskCompleteRequestBody camundaTaskCompleteRequestBody);
 }

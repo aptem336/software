@@ -11,4 +11,6 @@ public interface TaskResource {
     Uni<TaskFormResponseBody> getForm(String taskId);
 
     Uni<Map<String, String>> getVariables(String taskId);
+
+    Uni<Void> complete(String taskId, Map<String, String> variables);
 }

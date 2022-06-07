@@ -1,5 +1,6 @@
 package com.georg.resource.task;
 
+import com.georg.camunda.task.CamundaTaskCompleteRequestBody;
 import com.georg.camunda.task.TaskRestClient;
 import com.georg.enricher.TaskQueryResponseBodyOrderNumberEnricher;
 import com.georg.map.CamundaTaskDeployedFormTaskFormResponseBodyMap;
@@ -60,5 +61,18 @@ public class TaskResourceImpl implements TaskResource {
                                 .collect(HashMap::new, (map, entry) ->
                                                 map.put(entry.getKey(), entry.getValue().getValue()),
                                         HashMap::putAll));
+    }
+
+    @Override
+    public Uni<Void> complete(String taskId, Map<String, String> variables) {
+        return taskRestClient.complete(taskId, CamundaTaskCompleteRequestBody.builder()
+                .variables(variables.entrySet()
+                        .stream()
+                        .collect(Collectors.toMap(Map.Entry::getKey,
+                                taskVariablesRequestBodyEntry ->
+                                        CamundaTaskCompleteRequestBody.Variable.builder()
+                                                .value(taskVariablesRequestBodyEntry.getValue())
+                                                .build())))
+                .build());
     }
 }

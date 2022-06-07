@@ -33,4 +33,11 @@ public class TaskResourceWebService implements TaskResource {
     public Uni<Map<String, String>> getVariables(String taskId) {
         return taskResourceImpl.getVariables(taskId);
     }
+
+    @POST
+    @Path("{taskId}/complete")
+    @Override
+    public Uni<Void> complete(@PathParam("taskId") String taskId, Map<String, String> variables) {
+        return taskResourceImpl.complete(taskId, variables);
+    }
 }
