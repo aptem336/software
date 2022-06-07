@@ -9,6 +9,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,9 @@ public class TaskResourceImpl implements TaskResource {
                                 .plug(taskQueryResponseBodyOrderNumberEnricher))
                         .collect(Collectors.toList()))
                 .onItem()
-                .transformToUni(taskQueryRequestBodyUnis -> Uni.join().all(taskQueryRequestBodyUnis).andFailFast());
+                .transformToUni(taskQueryRequestBodyUnis -> taskQueryRequestBodyUnis.isEmpty()
+                        ? Uni.createFrom().item(Collections.emptyList())
+                        : Uni.join().all(taskQueryRequestBodyUnis).andCollectFailures());
     }
 
     @Override

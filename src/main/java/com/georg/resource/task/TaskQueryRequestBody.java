@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TaskQueryRequestBody {
     private String processInstanceId;
+    private String orderNumber;
 }
