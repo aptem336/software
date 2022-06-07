@@ -5,6 +5,7 @@ import com.georg.resource.task.TaskFormResponseBody;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -31,8 +32,12 @@ public class CamundaTaskDeployedFormTaskFormResponseBodyMap implements Function<
                     .label(component.getLabel())
                     .type(TaskFormResponseBody.Field.Type.valueOf(component.getType().name()))
                     .key(component.getKey())
-                    .readonly(component.getValidate().getReadonly())
-                    .required(component.getValidate().getRequired())
+                    .readonly(Optional.ofNullable(component.getValidate())
+                            .map(CamundaTaskDeployedFormResponseBody.Component.Validate::getReadonly)
+                            .orElse(false))
+                    .required(Optional.ofNullable(component.getValidate())
+                            .map(CamundaTaskDeployedFormResponseBody.Component.Validate::getRequired)
+                            .orElse(false))
                     .build();
         }
     }

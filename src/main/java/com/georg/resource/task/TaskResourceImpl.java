@@ -8,6 +8,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -56,8 +57,8 @@ public class TaskResourceImpl implements TaskResource {
                 .transform(stringCamundaTaskVariablesResponseBodyMap ->
                         stringCamundaTaskVariablesResponseBodyMap.entrySet()
                                 .stream()
-                                .collect(Collectors.toMap(Map.Entry::getKey,
-                                        camundaTaskVariablesResponseBodyEntry
-                                                -> camundaTaskVariablesResponseBodyEntry.getValue().getValue())));
+                                .collect(HashMap::new, (map, entry) ->
+                                                map.put(entry.getKey(), entry.getValue().getValue()),
+                                        HashMap::putAll));
     }
 }

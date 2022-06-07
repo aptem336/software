@@ -55,6 +55,6 @@ public interface TaskRestClient {
      * @return A JSON object of variables key-value pairs. Each key is a variable name and each value a variable value object that has the following properties:
      */
     @GET
-    @Path("/{taskId}/variables")
+    @Path("/{taskId}/form-variables")
     Uni<Map<String, CamundaTaskVariablesResponseBody>> getVariables(@PathParam("taskId") String taskId);
 }
