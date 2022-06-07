@@ -29,10 +29,27 @@
       }
     },
     {
-      "label": " Согласовано",
-      "type": "checkbox",
-      "id": "Field_03cdtqi",
-      "key": "approved"
+      "values": [
+        {
+          "value": "approved",
+          "label": "Согласовано"
+        },
+        {
+          "label": "На дополнительное согласование",
+          "value": "additional"
+        },
+        {
+          "label": "Отклонено",
+          "value": "reject"
+        }
+      ],
+      "label": "Выберите решение",
+      "type": "select",
+      "id": "Field_0bsz8ve",
+      "key": "approvedecision",
+      "validate": {
+        "required": true
+      }
     }
   ],
   "type": "default",
