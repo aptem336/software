@@ -18,10 +18,19 @@ public class TaskFormResponseBody {
         private String key;
         private Boolean readonly;
         private Boolean required;
+        private List<Value> values;
 
         public enum Type {
             textfield,
-            checkbox
+            checkbox,
+            select
+        }
+
+        @Data
+        @Builder(toBuilder = true)
+        public static class Value {
+            private String value;
+            private String label;
         }
     }
 }

@@ -38,6 +38,16 @@ public class CamundaTaskDeployedFormTaskFormResponseBodyMap implements Function<
                     .required(Optional.ofNullable(component.getValidate())
                             .map(CamundaTaskDeployedFormResponseBody.Component.Validate::getRequired)
                             .orElse(false))
+                    .values(Optional.ofNullable(component.getValues())
+                            .map(values -> values
+                                    .stream()
+                                    .map(value -> TaskFormResponseBody.Field.Value.builder()
+                                            .label(value.getLabel())
+                                            .value(value.getValue())
+                                            .build())
+                                    .collect(Collectors.toList()))
+                            .orElse(null)
+                    )
                     .build();
         }
     }
