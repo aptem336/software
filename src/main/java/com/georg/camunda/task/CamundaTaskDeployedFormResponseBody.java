@@ -32,7 +32,8 @@ public class CamundaTaskDeployedFormResponseBody {
         public enum Type {
             textfield,
             checkbox,
-            select
+            select,
+            number
         }
 
         @Data

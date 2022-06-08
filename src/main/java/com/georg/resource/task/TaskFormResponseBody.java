@@ -23,7 +23,8 @@ public class TaskFormResponseBody {
         public enum Type {
             textfield,
             checkbox,
-            select
+            select,
+            number
         }
 
         @Data

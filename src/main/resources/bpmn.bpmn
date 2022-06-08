@@ -54,6 +54,7 @@
           <camunda:formField id="software" type="string" />
           <camunda:formField id="reason" type="string" />
           <camunda:formField id="comment" type="string" />
+          <camunda:formField id="price" type="long" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1ppo1m0</bpmn:incoming>
@@ -123,6 +124,18 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="software">
+      <bpmndi:BPMNEdge id="Flow_14lgr1o_di" bpmnElement="Flow_14lgr1o">
+        <di:waypoint x="640" y="155" />
+        <di:waypoint x="640" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1b94au0_di" bpmnElement="Flow_1b94au0">
+        <di:waypoint x="640" y="205" />
+        <di:waypoint x="640" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ai95qu_di" bpmnElement="Flow_1ai95qu">
+        <di:waypoint x="580" y="180" />
+        <di:waypoint x="615" y="180" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1te56jg_di" bpmnElement="Flow_1te56jg">
         <di:waypoint x="530" y="262" />
         <di:waypoint x="530" y="220" />
@@ -150,18 +163,6 @@
       <bpmndi:BPMNEdge id="Flow_13gzaqu_di" bpmnElement="Flow_13gzaqu">
         <di:waypoint x="188" y="287" />
         <di:waypoint x="230" y="287" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ai95qu_di" bpmnElement="Flow_1ai95qu">
-        <di:waypoint x="580" y="180" />
-        <di:waypoint x="615" y="180" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1b94au0_di" bpmnElement="Flow_1b94au0">
-        <di:waypoint x="640" y="205" />
-        <di:waypoint x="640" y="247" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_14lgr1o_di" bpmnElement="Flow_14lgr1o">
-        <di:waypoint x="640" y="155" />
-        <di:waypoint x="640" y="118" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="152" y="269" width="36" height="36" />

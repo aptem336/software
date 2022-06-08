@@ -29,10 +29,10 @@
       }
     },
     {
-      "label": "Номер закупки",
-      "type": "textfield",
-      "id": "Field_0nkpywy",
-      "key": "field_02hk33k",
+      "label": "Цена",
+      "type": "number",
+      "id": "Field_0zvvmzw",
+      "key": "price",
       "validate": {
         "required": true
       }
