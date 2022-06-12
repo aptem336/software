@@ -1,0 +1,8 @@
+package com.georg.externaltaskexecutor;
+
+import com.georg.camunda.externaltask.CamundaExternalTaskCompleteResponseBody;
+import com.georg.camunda.externaltask.CamundaExternalTaskFetchAndLockResponseBody;
+
+public interface ExternalTaskExecutor {
+    CamundaExternalTaskCompleteResponseBody execute(CamundaExternalTaskFetchAndLockResponseBody camundaExternalTaskFetchAndLockResponseBody);
+}

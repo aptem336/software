@@ -1,0 +1,47 @@
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <route>
+        <from uri="scheduler:externalTask?delay=5000"/>
+        <setBody>
+            <simple>
+            {
+                "workerId": "{{camunda.worker-id}}",
+                "maxTasks": {{camunda.worker-max-tasks}},
+                "topics": [
+                    {
+                        "topicName": "checkStopFactors",
+                        "lockDuration": 10000
+                    }
+                ]
+            }
+            </simple>
+        </setBody>
+        <unmarshal>
+            <json/>
+        </unmarshal>
+        <to uri="log:logger"/>
+        <marshal>
+            <json/>
+        </marshal>
+        <to uri="log:logger"/>
+        <to uri="{{quarkus.rest-client.camunda-rest-api.url}}/external-task/fetchAndLock"/>
+        <unmarshal>
+            <json useList="true" unmarshalType="com.georg.camunda.externaltask.CamundaExternalTaskFetchAndLockResponseBody"/>
+        </unmarshal>
+        <to uri="log:logger"/>
+        <split>
+            <simple>${body}</simple>
+            <setProperty name="id">
+                <simple>${body.id}</simple>
+            </setProperty>
+            <to uri="log:logger"/>
+            <to uri="bean:checkStopFactorsExternalTaskExecutor?method=execute"/>
+            <to uri="log:logger"/>
+            <marshal>
+                <json/>
+            </marshal>
+            <recipientList>
+                <simple>{{quarkus.rest-client.camunda-rest-api.url}}/external-task/${exchangeProperty.id}/complete</simple>
+            </recipientList>
+        </split>
+    </route>
+</routes>
