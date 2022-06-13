@@ -1,0 +1,24 @@
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <route>
+        <from uri="direct:black-list-csv"/>
+        <unmarshal>
+            <csv skipHeaderRecord="true" useMaps="true">
+                <header>name</header>
+                <header>reason</header>
+            </csv>
+        </unmarshal>
+        <split>
+            <simple>${body}</simple>
+            <to uri="log:logger"/>
+            <marshal>
+                <json/>
+            </marshal>
+            <removeHeaders pattern="CamelHttpPath"/>
+            <to uri="log:logger"/>
+            <to uri="{{blackListEntityCreateUri}}"/>
+        </split>
+        <marshal>
+            <json/>
+        </marshal>
+    </route>
+</routes>

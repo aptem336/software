@@ -1,0 +1,8 @@
+<rests xmlns="http://camel.apache.org/schema/spring">
+    <rest path="/black-list-csv">
+        <post consumes="application/octet-stream">
+            <param name="body" type="body"/>
+            <to uri="direct:black-list-csv"/>
+        </post>
+    </rest>
+</rests>

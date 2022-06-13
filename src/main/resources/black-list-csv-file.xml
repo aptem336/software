@@ -1,0 +1,6 @@
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <route>
+        <from uri="{{blackListCsvFileUri}}"/>
+        <to uri="direct:black-list-csv"/>
+    </route>
+</routes>

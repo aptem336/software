@@ -10,6 +10,9 @@ import javax.persistence.Entity;
 
 @Entity
 @FieldNameConstants
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class BlackListSoftwareEntity extends PanacheEntity {
