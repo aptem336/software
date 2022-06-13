@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 2,
+  "components": [
+    {
+      "label": "Причина отказа",
+      "type": "textfield",
+      "id": "Field_1wuwf6u",
+      "key": "cancellationReason",
+      "validate": {
+        "required": true,
+        "readonly": true
+      }
+    },
+    {
+      "values": [
+        {
+          "label": "Value",
+          "value": "value1"
+        },
+        {
+          "label": "Value",
+          "value": "value2"
+        }
+      ],
+      "label": "Выберите альтернативу",
+      "type": "select",
+      "id": "Field_1sco1gd",
+      "key": "software",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "alternative-form"
+}
