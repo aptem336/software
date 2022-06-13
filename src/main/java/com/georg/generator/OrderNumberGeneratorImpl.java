@@ -1,6 +1,6 @@
 package com.georg.generator;
 
-import com.georg.OrderNumberEntity;
+import com.georg.entity.OrderNumberEntity;
 import io.smallrye.mutiny.Uni;
 
 import javax.enterprise.context.ApplicationScoped;

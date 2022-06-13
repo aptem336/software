@@ -1,4 +1,4 @@
-package com.georg;
+package com.georg.entity;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import lombok.Getter;
