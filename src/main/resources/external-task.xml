@@ -33,12 +33,16 @@
             <setProperty name="id">
                 <simple>${body.id}</simple>
             </setProperty>
-            <to uri="log:logger"/>
-            <to uri="bean:checkStopFactorsExternalTaskExecutor?method=execute"/>
+            <setProperty name="topicName">
+                <simple>${body.topicName}</simple>
+            </setProperty>
             <to uri="log:logger"/>
             <marshal>
                 <json/>
             </marshal>
+            <recipientList>
+                <simple>{{camunda.worker-host}}${exchangeProperty.topicName}</simple>
+            </recipientList>
             <recipientList>
                 <simple>{{quarkus.rest-client.camunda-rest-api.url}}/external-task/${exchangeProperty.id}/complete</simple>
             </recipientList>

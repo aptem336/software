@@ -6,6 +6,8 @@ import io.smallrye.config.ConfigMapping;
 public interface CamundaConfig {
     String processDefinitionKey();
 
+    String workerHost();
+
     String workerId();
 
     String workerMaxTasks();
