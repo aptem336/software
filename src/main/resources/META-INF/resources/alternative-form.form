@@ -14,12 +14,12 @@
     {
       "values": [
         {
-          "label": "Value",
-          "value": "value1"
+          "value": "GIMP",
+          "label": "GIMP"
         },
         {
-          "label": "Value",
-          "value": "value2"
+          "label": "Paint.net",
+          "value": "Paint.net"
         }
       ],
       "label": "Выберите альтернативу",
